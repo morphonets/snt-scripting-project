@@ -1,0 +1,27 @@
+# Maven
+target/
+log/
+
+# IntelliJ
+.idea/
+*.iml
+out/
+
+# VSCode
+.vscode/
+
+# Eclipse
+.settings/
+.project
+.classpath
+
+# Mac
+.DS_Store
+
+# Java
+hs_err*.log
+
+# Other
+*.tmp
+*.bak
+*.swp

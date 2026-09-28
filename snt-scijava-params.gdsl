@@ -1,0 +1,29 @@
+/*
+ * IntelliJ GDSL descriptor: teaches the Groovy plugin about the implicit
+ * variables SciJava's "#@" parameter headers inject at runtime (Fiji's
+ * Script Editor strips those header lines and binds these names before
+ * running the rest of the script - see scripts/*.groovy for the headers
+ * actually used).
+ *
+ * This fixes "cannot resolve symbol" and gives real autocompletion for
+ * snt./ui./etc. in the script body. It does NOT silence the syntax-error
+ * squiggle IntelliJ shows on the "#@..." header lines themselves - those
+ * aren't valid Groovy outside Fiji's preprocessor and that's cosmetic only.
+ *
+ * Setup: IntelliJ detects new .gdsl files and shows a notification asking
+ * whether to trust/enable it (or: Settings > Languages & Frameworks >
+ * Groovy > Groovy DSL Awareness). Enable it once per project.
+ */
+contributor(context(filetypes: ["groovy"])) {
+  property name: "context", type: "org.scijava.Context"
+  property name: "snt",     type: "sc.fiji.snt.SNTService"
+  property name: "ui",      type: "org.scijava.ui.UIService"
+  property name: "ds",      type: "net.imagej.DatasetService"
+  property name: "display", type: "org.scijava.display.DisplayService"
+  property name: "ij",      type: "net.imagej.ImageJ"
+  property name: "log",     type: "org.scijava.log.LogService"
+  property name: "lut",     type: "net.imagej.lut.LUTService"
+  property name: "io",      type: "org.scijava.io.IOService"
+  property name: "op",      type: "net.imagej.ops.OpService"
+  property name: "status",  type: "org.scijava.app.StatusService"
+}

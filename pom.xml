@@ -1,0 +1,67 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.morphonets</groupId>
+  <artifactId>snt-scripting</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>SNT scripting project</name>
+  <description>Minimal Maven project to enable IDE autocompletion for SNT/Fiji Groovy scripts</description>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.release>21</maven.compiler.release>
+    <!-- Bump this to match the SNT version bundled with your Fiji install -->
+    <snt.version>5.0.19</snt.version>
+    <!-- Kept in sync with pom-scijava's groovy.version -->
+    <groovy.version>4.0.28</groovy.version>
+    <gmavenplus.version>3.0.2</gmavenplus.version>
+  </properties>
+
+  <repositories>
+    <repository>
+      <id>scijava.public</id>
+      <url>https://maven.scijava.org/content/groups/public</url>
+    </repository>
+  </repositories>
+
+  <dependencies>
+    <!-- Pulls in ImageJ/Fiji core and all of SNT's other dependencies transitively -->
+    <dependency>
+      <groupId>org.morphonets</groupId>
+      <artifactId>SNT</artifactId>
+      <version>${snt.version}</version>
+    </dependency>
+    <!-- Needed on the classpath for gmavenplus to compile/resolve the scripts -->
+    <dependency>
+      <groupId>org.apache.groovy</groupId>
+      <artifactId>groovy</artifactId>
+      <version>${groovy.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <!-- We aren't structuring things 'properly': just a flat directory of scripts -->
+    <sourceDirectory>scripts</sourceDirectory>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.gmavenplus</groupId>
+        <artifactId>gmavenplus-plugin</artifactId>
+        <version>${gmavenplus.version}</version>
+        <executions>
+          <execution>
+            <!-- addSources only: scripts use SciJava's "#@" parameter-injection
+                 header, which plain Groovy cannot compile. This goal just
+                 registers scripts/ as a source root so the IDE resolves
+                 types and offers autocompletion, without trying to build. -->
+            <goals>
+              <goal>addSources</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
